@@ -63,11 +63,85 @@ int ex1() {
 
 }
 
-//Ex2 
+//Ex2 Checks whether a number is prime or not while user wants to 
+#include <iostream>
+#include <cmath>
+
+//Stores only unsigned int that are prime or 0
+class Prime {
+	unsigned num = 0;
+	bool checkPrime(int n) {
+		if (n <= 1)
+			return false;
+		for (int i = 2; i <= static_cast<int>(sqrt(n)); i++) {
+			if (n % i == 0)
+				return false;
+		}
+		return true;
+	}
+public:
+	bool isPrime() const {
+		return num != 0;
+	}
+
+	unsigned getNum() const {
+		return num;
+	}
+
+	void setNum(int n) {
+		if (checkPrime(n))
+			num = static_cast<unsigned>(n);
+		else
+			num = 0;
+	}
+
+};
+
+int ex2() {
+	char choice = 'y';
+	while (choice == 'y' || choice == 'Y') {
+		Prime pNum;
+		std::cout << "Enter the number to check : ";
+		int n;
+		std::cin >> n;
+		pNum.setNum(n);
+		if (pNum.isPrime())
+			std::cout << "The number you entered is prime.";
+		else
+			std::cout << "The number you entered is not prime.";
+		std::cout << "\nEnter y to check another number else enter n : ";
+		std::cin >> choice;
+	}
+	return 0;
+}
+
+//Ex3 Member functions calling other member functions
+#include <iostream>
+
+class CarPark {
+	int car_id;
+	int charge_per_hour;
+	float parked_time;
+
+};
+
+int ex3() {
+	return 0;
+}
 
 int main()
 {
 	ex1();
+	putchar('\n');
+	system("pause");
+	putchar('\n');
+
+	ex2();
+	putchar('\n');
+	system("pause");
+	putchar('\n');
+
+	ex3();
 	putchar('\n');
 	system("pause");
 	putchar('\n');
