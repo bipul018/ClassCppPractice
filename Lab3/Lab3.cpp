@@ -185,6 +185,14 @@ public:
 	float getArea() const {
 		return PI * m_r * m_r;
 	}
+	float getPerimeter() const {
+		return 2 * PI * m_r;
+	}
+	void display() const {
+		std::cout << "Circle of radius " << m_r
+			<< " has perimeter " << getPerimeter()
+			<< " has area " << getArea() << std::endl;
+	}
 };
 
 class Rect {
@@ -198,11 +206,22 @@ public:
 	float getArea() const {
 		return m_l * m_b;
 	}
+	float getPerimeter() const {
+		return m_l + m_b;
+	}
+
 	struct {
 		float l;
 		float b;
 	} getDim() const {
 		return { m_l,m_b };
+	}
+
+	void display() const {
+		std::cout << "Rectangle of length " << m_l
+			<< " and breadth " << m_b
+			<<" and perimeter "<<getPerimeter()
+			<< " has area " << getArea() << std::endl;
 	}
 };
 	
@@ -217,8 +236,11 @@ public:
 		m_c = c;
 	}
 	float getArea() const {
-		auto s = (m_a + m_b + m_c) / 2;
+		auto s = getPerimeter();
 		return sqrtf(s * (s - m_a) * (s - m_b) * (s - m_c));
+	}
+	float getPerimeter() const {
+		return m_a + m_b + m_c;
 	}
 	struct {
 		float a;
@@ -226,6 +248,12 @@ public:
 		float c;
 	} getDim() const {
 		return { m_a,m_b,m_c };
+	}
+	void display() const {
+		std::cout << "The triangle of side lengths " << m_a
+			<< " , " << m_b << " , " << m_c
+			<< " and perimeter " << getPerimeter()
+			<< " has area " << getArea() << std::endl;
 	}
 
 };
@@ -247,19 +275,10 @@ int ex4() {
 	rec.setDim(rl, rb);
 	tria.setDim(ta, tb, tc);
 
-	std::cout << "Circle of radius " << cir.getRadius()
-		<< " has area " << cir.getArea() << std::endl;
-
-	std::cout << "Rectangle of length " << rec.getDim().l
-		<< " and breadth " << rec.getDim().b
-		<< " has area " << rec.getArea() << std::endl;
-
-	auto triDim = tria.getDim();
-
-	std::cout << "The triangle of side lengths " << triDim.a
-		<< " , " << triDim.b << " , " << triDim.c
-		<< " has area " << tria.getArea() << std::endl;
-
+	cir.display();
+	rec.display();
+	tria.display();
+	
 	return 0;
 }
 
