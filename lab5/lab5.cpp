@@ -4,8 +4,69 @@ Write a class Date that overloads prefix and postfix operators to increase the D
 while causing appropriate increments to the month and year (use the appropriate condition for leap year). 
 The prefix and postfix operators in the Date class should behave exactly like the built-in increment operators.
 */
+#include <iostream>
 
+
+class Date {
+public:
+	Date(unsigned d = 1, unsigned m = 1, unsigned y=2022) :
+		dd(d), mm(m), yy(y) {
+		minimize();
+	}
+	enum Months {
+		JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC, N_MONTHS
+	};
+	static unsigned getMaxDays(unsigned month,unsigned year) {
+		month = (month - 1) % 12;
+		if (year % 4 == 0 && month == 1)
+			return daysInMonths[1] + 1;
+
+		return daysInMonths[month];
+	}
+	Date& operator++() {
+		++dd;
+		minimize();
+		return *this;
+	}
+	Date operator++(int) {
+		Date temp = *this;
+		++(*this);
+		return temp;
+	}
+	Date& operator()() {
+		std::cout << " " << dd << " " << monthsName[mm-1] << " " <<  yy << " ";
+		return *this;
+	}
+private:
+	void minimize() {
+		if (mm > N_MONTHS) {
+			yy += (mm - 1) / 12;
+			mm = (mm - 1) % 12 + 1;
+		}
+		while (dd > getMaxDays(mm, yy)) {
+			dd -= getMaxDays(mm, yy);
+			mm++;
+			if (mm > N_MONTHS) {
+				yy += (mm - 1) / 12;
+				mm = (mm - 1) % 12 + 1;
+			}
+		}
+	}
+	static const int daysInMonths[];
+	static const char* monthsName[];
+	unsigned mm;
+	unsigned dd;
+	unsigned yy;
+};
+const int Date::daysInMonths[] = { 30,28,31,30,31,30,31,31,30,31,30,31 };
+const char* Date::monthsName[] = { "January","February","March","April","May","June"
+									,"July","August","September","October","November","December" };
 int main4() {
+	Date today(30, 6);
+	today();
+	(++today)();
+	(today++)();
+	today();
 	return 0;
 }
 
@@ -94,7 +155,7 @@ public:
 		return m_z;
 	}
 	void print() const  {
-		std::cout << "( " << m_x << " , " << m_y << " , " << m_z << " )";
+		std::cout << " (" << m_x << " , " << m_y << " , " << m_z << ") ";
 	}
 
 private:
@@ -208,6 +269,10 @@ int main()
 	putchar('\n');
 
 	main3();
+	system("pause");
+	putchar('\n');
+
+	main4();
 	system("pause");
 	putchar('\n');
 	return 0;
