@@ -249,7 +249,7 @@ public:
 	}
 
 	void show12Hrs() const {
-		std::cout << " " << (m_hour % 12 + 12) % 13 << " : "
+		std::cout << " " << ((m_hour%12==0)?12:(m_hour%12)) << " : "
 			<< m_min << " : " << m_sec << " " <<( (m_hour > 12) ? "PM\n" : "AM\n");
 	}
 	//destructors &exceptions, delete obj stack
