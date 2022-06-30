@@ -139,8 +139,8 @@ public:
 	}
 
 	~Depart() {
+		std::cout << "Object " << m_id <<" of name "<<m_name<<" goes out of scope.\n";
 		delete[] m_name;
-		std::cout << "Object " << m_id << " goes out of scope.\n";
 	}
 private:
 	unsigned m_id;
