@@ -136,9 +136,10 @@ Make least possible classes to demonstrate all the above in a single program wit
 */
 #include <iostream>
 class Coor2D;
+class Print;
 class Add {
 public:
-	Coor2D coor2(Coor2D , Coor2D );
+	Coor2D coor2d(Coor2D, Coor2D);
 };
 class Coor2D {
 public:
@@ -146,19 +147,52 @@ public:
 		m_x(x), m_y(y) {
 
 	}
-	friend Coor2D Add::coor2(Coor2D, Coor2D);
+	friend Coor2D Add::coor2d(Coor2D, Coor2D);
+	friend Coor2D mult(Coor2D, Coor2D);
+	friend Coor2D div(Coor2D, Coor2D);
+	friend Coor2D sub(Coor2D, Coor2D);
+	friend class Print;
 private:
 	float m_x;
 	float m_y;
 };
+Coor2D Add::coor2d(Coor2D a, Coor2D b) {
+	return Coor2D(a.m_x + b.m_x, a.m_y + b.m_y);
+}
+
+Coor2D mult(Coor2D a, Coor2D b) {
+	return Coor2D(a.m_x * b.m_x, a.m_y * b.m_y);
+
+}
+Coor2D div(Coor2D a, Coor2D b) {
+	return Coor2D(a.m_x / b.m_x, a.m_y / b.m_y);
+
+}
+Coor2D sub(Coor2D a, Coor2D b) {
+	return Coor2D(a.m_x - b.m_x, a.m_y - b.m_y);
+
+}
+class Print {
+public:
+	Print& coor2d(const Coor2D& c) {
+		std::cout << " (" << c.m_x << " , " << c.m_y << ") ";
+		return *this;
+	}
+};
 int main1() {
+	Coor2D a(1, 2), b(4, -6), sum, dif, prod, divRes;
+	Add adder;
+	Print printer;
+	sum = adder.coor2d(a, b);
+	dif = sub(a, b);
+	prod = mult(a, b);
+	divRes = div(a, b);
+	printer.coor2d(a).coor2d(b).coor2d(sum).
+		coor2d(dif).coor2d(prod).coor2d(divRes);
 	return 0;
 }
 
 
-Coor2D Add::coor2(Coor2D a, Coor2D b) {
-	return Coor2D(a.m_x + b.m_x, a.m_y + b.m_y);
-}
 
 #include <iostream>
 #include <cstdlib>
