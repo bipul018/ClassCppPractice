@@ -5,12 +5,72 @@ Finally, make a third class that is a friend of derived and calculate
 the difference of the base complex number and its own complex number.
 */
 
-#include<iostream>
+#include <iostream>
+using namespace std;
 
-int main5() {
+class Complex
+{
+public:
+    void getIn() {
+        cout << "Enter real and imaginary :";
+        cin >> m_real >> m_imag;
+    }
+    void display()
+    {
+        cout << "The complex number is: " << m_real << " + i" << m_imag << endl;
+    }
+
+    float m_real;
+    float m_imag;
+};
+
+class Inherit : public Complex
+{
+public:
+    friend class CFriend;
+    void add(Complex a)
+    {
+        cout << "The sum from base and inherited : " << a.m_real + m_real << " + i" << a.m_imag + m_imag << endl;
+    }
+    
+};
+class CFriend
+{
+public:
+    void diff(Complex a)
+    {
+        cout << "The difference of base and friend: " << a.m_real - m_real << " + i" << a.m_imag - m_imag << endl;
+    }
+    void getIn() {
+        cout << "Enter real and imaginary :";
+        cin >> m_real >> m_imag;
+    }
+    void display()
+    {
+        cout << "The complex number is: " << m_real << " + i" << m_imag << endl;
+    }
+private:
+    float m_real, m_imag;
+
+};
+int main5()
+{
+    Complex a;
+    cout << "For base class: " << endl;
+    a.getIn();
+    a.display();
+    Inherit b;
+    cout << "For inherited class: " << endl;
+    b.getIn();
+    b.display();
+    b.add(a);
+    CFriend c;
+    cout << "For friend class: " << endl;
+    c.getIn();
+    c.display();
+    c.diff(a);
     return 0;
 }
-
 
 /*
 Write three derived classes inheriting functionality of base class person 
@@ -25,9 +85,83 @@ Using a calculator, calculate the address space occupied by
 each object and verify this with address spaces printed by the program.
 */
 
-#include<iostream>
 
+#include <iostream>
+#include <string>
+using namespace std;
+class person {
+private:
+    string Name;
+    int Age;
+public:
+    void askName() {
+        cout << "What is the name? " << endl;
+        cin >> Name;
+    }
+    void askAge() {
+        cout << "What is the age? " << endl;
+        cin >> Age;
+    }
+    void pAdd() {
+        cout << this << endl;
+    }
+};
+class student : public person {
+private:
+    int rollNo;
+    int level;
+public:
+    void printRollNo() {
+        cout << "Roll Number: " << rollNo << endl;
+    }
+    void printLevel() {
+        cout << "Level: " << level << endl;
+    }
+    void pAdd() {
+        cout << this << endl;
+    }
+};
+class employee : public person {
+private:
+    int salary;
+    int idNo;
+public:
+    void printSalary() {
+        cout << "Salary: " << salary << endl;
+    }
+    void printIdNo() {
+        cout << "Id Number: " << idNo << endl;
+    }
+    void pAdd() {
+        cout << this << endl;
+    }
+};
 int main4() {
+    person p1, p2;
+    student s1, s2;
+    employee e1, e2;
+    cout << "Addresses of pointers\n";
+
+    cout << "P1 :"; 
+    p1.pAdd(); 
+    cout << " P2 :"; 
+    p2.pAdd();
+    cout << "\nS1 :" ; 
+    s1.pAdd(); 
+    cout<< " S2 :" ; 
+    s2.pAdd();
+    cout << "\nE1 :" ; 
+    e1.pAdd(); 
+    cout << " E2 :"; 
+    e2.pAdd();
+
+    cout << "Sizes of objects: \n";
+    cout << "Person: " << sizeof(p1) << endl;
+
+    cout << "Student: " << sizeof(s1) << endl;
+
+    cout << "mployee: " << sizeof(e1) << endl;
+
     return 0;
 }
 
