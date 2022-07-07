@@ -18,7 +18,7 @@ public:
 	};
 	static unsigned getMaxDays(unsigned month,unsigned year) {
 		month = (month - 1) % 12;
-		if (year % 4 == 0 && month == 1)
+		if (year % 4 == 0 && month == FEB && (year % 100 != 0 || year % 400 == 0))
 			return daysInMonths[1] + 1;
 
 		return daysInMonths[month];
