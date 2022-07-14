@@ -30,7 +30,42 @@ Show the use of the virtual base class.
 
 #include <iostream>
 
+class Person {
+public:
+	Person(std::string name) :m_name(name) {
+
+	}
+	void setName(std::string name) {
+		m_name = name;
+	}
+	std::string getName() {
+		return m_name;
+	}
+private:
+	std::string m_name;
+};
+class Student : virtual public Person {
+public:
+	Student(std::string name) :Person(name) {}
+};
+class Employee : virtual public Person {
+public:
+	Employee(std::string name) :Person(name) {}
+};
+class Manager : public Employee,public Student {
+public:
+	Manager(std::string name) :Student(name),Employee(name),Person(name) {}
+
+};
+
+
 int main2() {
+	Manager m("Kumar");
+	std::cout << m.getName() << std::endl;
+	m.Student::setName("Stu Kumar");
+	std::cout << m.Employee::getName() << std::endl;
+	m.Employee::setName("Employ Kumar");
+	std::cout << m.Student::getName() << std::endl;
 
 	return 0;
 }
