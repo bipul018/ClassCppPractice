@@ -6,61 +6,65 @@ Illustrate RTTI by the use of dynamic_cast and typeid operators in this program.
 #include <iostream>
 #include <typeinfo>
 class Vehicle {
-protected:
-	int engineNumber;
 public:
-	Vehicle(int i) :engineNumber(i) {};
-	int getEngineNumber() {
-		return engineNumber;
+	Vehicle(int i) :m_engineNum(i) {}
+	int getEngineNum() {
+		return m_engineNum;
 	}
+	virtual ~Vehicle(){}
+protected:
+	int m_engineNum;
 };
 class Bus :public Vehicle {
-private:
-	std::string brandName;
 public:
-	Bus(int i, std::string s) :Vehicle(i), brandName(s) {};
+	Bus(int i, std::string s) :Vehicle(i), m_brand(s) {}
 	std::string getBrandName() {
-		return brandName;
+		return m_brand + " Bus";
 	}
+private:
+	std::string m_brand;
 };
 class Car :public Vehicle {
-private:
-	std::string brandName;
 public:
-	Car(int i, std::string s) :Vehicle(i), brandName(s) {};
+	Car(int i, std::string s) :Vehicle(i), m_brand(s) {}
 	std::string getBrandName() {
-		return brandName;
+		return m_brand + " Car";
 	}
+private:
+	std::string m_brand;
 };
 class Bike :public Vehicle {
-private:
-	std::string brandName;
 public:
-	Bike(int i, std::string s) :Vehicle(i), brandName(s) {};
+	Bike(int i, std::string s) :Vehicle(i), m_brand(s) {}
 	std::string getBrandName() {
-		return brandName;
+		return m_brand + " Bike";
 	}
+private:
+	std::string m_brand;
 };
 namespace Q4 {
+	void showDetail(Vehicle* v, const std::type_info& info) {
+		std::cout << "Class type = " << info.name()
+			<< "\nEngine Number = " << v->getEngineNum();
+	
+		if (info == typeid(Bus))
+			std::cout<<"\n"<<dynamic_cast<Bus*>(v)->getBrandName()<<"\n";
+		else if (info == typeid(Car))
+			std::cout << "\n" << dynamic_cast<Car*>(v)->getBrandName()<<"\n";
+		else if(info == typeid(Bike))
+			std::cout << "\n" << dynamic_cast<Bike*>(v)->getBrandName()<<"\n";
+		delete v;
+	}
 	int main() {
-		Vehicle* v[3];
-		Bus bus(100, "Volvo");
-		Car car(10, "Hyundai");
-		Bike bike(1, "Bajaj");
-		v[0] = dynamic_cast<Bus*>(&bus);
-		v[1] = dynamic_cast<Car*>(&car);
-		v[2] = dynamic_cast<Bike*>(&bike);
-		std::cout << "Details: " << std::endl;
-		for (int i = 0; i < 3; i++) {
-			std::cout << "Type Id: " << typeid(*v[i]).name() << std::endl;
-			std::cout << "Engine Number: " << v[i]->getEngineNumber() << std::endl;
-		}
-		std::cout << "Type ID: " << typeid(bus).name() << std::endl;
-		std::cout << "Brand Name: " << bus.getBrandName() << std::endl;
-		std::cout << "Type ID: " << typeid(car).name() << std::endl;
-		std::cout << "Brand Name: " << car.getBrandName() << std::endl;
-		std::cout << "Type ID: " << typeid(bike).name() << std::endl;
-		std::cout << "Brand Name: " << bike.getBrandName() << std::endl;
+		Bus *bus = new Bus(100, "Volvo");
+		Car *car = new Car(10, "Hyundai");
+		Bike *bike= new Bike(1, "Bajaj");
+
+		showDetail(bus, typeid(*bus));
+		showDetail(car, typeid(*car));
+		showDetail(bike, typeid(*bike));
+
+
 		return 0;
 	}
 }
@@ -78,23 +82,24 @@ namespace Q3 {
 		virtual void show() {
 			std::cout << m_name<<std::endl;
 		}
-		virtual void set() = 0;
+		virtual void set() {
+			std::cout << "Enter name : ";
+			std::cin >> m_name;
+		}
 	protected:
 		std::string m_name;
 	};
 	class Engineering : public Student {
 	public:
 		void set() {
-			std::cout << "Enter name : ";
-			std::cin >> m_name;
+			Student::set();
 			m_name = "Engineer " + m_name;
 		}
 	};
 	class Medicine :public Student {
 	public:
 		void set() {
-			std::cout << "Enter name : ";
-			std::cin >> m_name;
+			Student::set();
 			m_name = "Medicine " + m_name;
 		}
 
@@ -102,8 +107,7 @@ namespace Q3 {
 	class Science :public Student {
 	public:
 		void set() {
-			std::cout << "Enter name : ";
-			std::cin >> m_name;
+			Student::set();
 			m_name = "Science " + m_name;
 		}
 
