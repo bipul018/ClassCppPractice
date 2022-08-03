@@ -9,7 +9,8 @@ delete and display the account information (account-number, last-name, first-nam
 #include <cstdio>
 namespace Q5 {
 	using namespace std;
-	struct Account {
+	class Account {
+	public:
 		char fName[100];
 		char lName[100];
 		unsigned accN;
@@ -418,10 +419,6 @@ namespace Q1 {
 
 int main() {
 
-	Q5::main();
-	system("pause");
-	std::cout << std::endl;
-	return 0;
 	Q1::main();
 	system("pause");
 	std::cout << std::endl;
