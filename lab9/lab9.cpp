@@ -3,10 +3,52 @@ Q4
 Write any program that demonstrates the use of multiple catch handling, re-throwing an exception, and catching all exceptions.
 */
 #include <iostream>
+
 namespace Q4 {
 	using namespace std;
 
+	class divZero {};
+	class plusInf {};
+	class minusInf {};
+	double divide(double a, double  b) {
+		try {
+			if (b == 0 )
+				throw divZero();
+			return a / b;
+		}
+		catch (divZero) {
+			if (a > 0)
+				throw plusInf();
+			else if (a < 0)
+				throw minusInf();
+			throw;
+		}
+	}
+	void callOnDouble(double (*func)(double, double), double a, double b) {
+
+		cout << "The result of operation is : ";
+		try {
+			cout << divide(a, b);
+		}
+		catch (plusInf) {
+			cout << " + infinite ";
+		}
+		catch (minusInf) {
+			cout << " - infinite";
+		}
+	}
+
 	int main() {
+		double a, b;
+		cout << "Enter two numbers : ";
+		cin >> a >> b;
+
+		try {
+			callOnDouble(divide, a, b);
+		}
+		catch (...) {
+			cout << "\nUnhandled error in double calculation.\n";
+		}
 
 		return 0;
 	}
