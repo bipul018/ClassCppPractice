@@ -28,7 +28,7 @@ namespace Q4 {
 
 		cout << "The result of operation is : ";
 		try {
-			cout << divide(a, b);
+			cout << func(a, b);
 		}
 		catch (plusInf) {
 			cout << " + infinite ";
