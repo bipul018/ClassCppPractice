@@ -47,7 +47,7 @@ namespace Q4 {
 			callOnDouble(divide, a, b);
 		}
 		catch (...) {
-			cout << "\nUnhandled error in double calculation.\n";
+			cout << "\nUnhandled error in double division.\n";
 		}
 
 		return 0;
